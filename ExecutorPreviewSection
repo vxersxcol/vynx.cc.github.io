@@ -1,0 +1,151 @@
+import React from 'react';
+import { CheckIcon, CloseIcon, LightningIcon, ResponseTimeIcon, ReliabilityIcon } from './Icons';
+
+const codeContent = [
+  "local BG = Instance.new('BodyVelocity')",
+  "BG.P = 9e4",
+  "BG.maxForce = Vector3.new(9e9, 9e9, 9e9)",
+  "BG.velocity = CFrame.new(root.Position, mouse.Hit.Position).lookVector * 50",
+  "BG.Parent = T",
+  "local Weld = Instance.new('Weld', T)",
+  "Weld.Part0 = root",
+  "Weld.Part1 = T",
+  "task.spawn(function()",
+  "  wait(0.2)",
+  "  T:Destroy()",
+  "end)",
+  "if not v.Parent:FindFirstChild('Humanoid') then",
+  "  v.CanCollide = false",
+  "end",
+  "if CONTROL_L or CONTROL_R or CONTROL_D or CONTROL_S then",
+  "  if v.Name == 'Handle' then",
+  "    -- more logic here",
+  "  end",
+  "end",
+];
+
+const clients = [
+    { name: "FHS:1204", active: true },
+    { name: "FHS:6732", active: true },
+    { name: "FHS:3001", active: false },
+    { name: "FHS:5500", active: true },
+    { name: "FHS:7844", active: true },
+    { name: "FHS:9122", active: true },
+];
+
+const ExecutorUI: React.FC = () => (
+  <div className="bg-[#111111] border border-black/20 rounded-lg shadow-2xl shadow-gray-900/20 overflow-hidden font-mono text-sm">
+    <div className="flex items-center justify-between p-2 bg-[#1a1a1a] border-b border-gray-800">
+      <div className="flex items-center space-x-2">
+        <div className="w-3 h-3 rounded-full bg-red-500"></div>
+        <div className="w-3 h-3 rounded-full bg-yellow-500"></div>
+        <div className="w-3 h-3 rounded-full bg-green-500"></div>
+        <span className="text-gray-400 text-xs pl-2">vynx.cc [0.2] https://vynx.cc/</span>
+      </div>
+       <div className="flex items-center text-gray-400">
+         <span className="pr-2">×</span>
+      </div>
+    </div>
+    <div className="flex" style={{ height: '450px' }}>
+      <div 
+        className="flex-grow p-4 overflow-auto"
+        style={{
+            backgroundImage: 'linear-gradient(rgba(40, 40, 40, 0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(40, 40, 40, 0.5) 1px, transparent 1px)',
+            backgroundSize: '20px 20px',
+        }}
+      >
+        <div className="flex">
+            <div className="text-right pr-4 text-gray-600 select-none">
+                {codeContent.map((_, index) => <div key={index}>{6803 + index}</div>)}
+            </div>
+            <div className="text-gray-300 whitespace-pre">
+              {codeContent.map((line, index) => <div key={index}>{line}</div>)}
+            </div>
+        </div>
+      </div>
+      <div className="w-48 bg-[#161616] border-l border-gray-800 p-3">
+        <div className="flex justify-between items-center text-xs text-white font-semibold">
+          <span>Active Clients (7)</span>
+          <div className="flex space-x-2 items-center">
+            <CheckIcon className="w-4 h-4 text-green-500" />
+            <CloseIcon className="w-3 h-3 text-red-500" />
+          </div>
+        </div>
+        <div className="mt-3 space-y-2">
+            {clients.map(client => (
+                <div key={client.name} className="flex items-center space-x-2 text-xs">
+                    <input type="checkbox" checked={client.active} readOnly className="form-checkbox h-3 w-3 bg-gray-700 border-gray-600 text-green-500 rounded-sm focus:ring-0" />
+                    <span className={client.active ? 'text-gray-300' : 'text-gray-600'}>{client.name}</span>
+                </div>
+            ))}
+        </div>
+      </div>
+    </div>
+  </div>
+);
+
+
+const ExecutorPreviewSection: React.FC = () => {
+  return (
+    <section className="max-w-7xl mx-auto -mt-12">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        <div className="lg:col-span-2">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-6 px-6">
+                 <div>
+                    <h3 className="text-xl font-semibold text-gray-900">External Execution</h3>
+                    <p className="text-gray-600 mt-2">Execute scripts externally with the keyless executor interface.</p>
+                </div>
+                 <div className="hidden md:block">
+                    <h3 className="text-xl font-semibold text-gray-900">Lightning Fast Performance</h3>
+                    <p className="text-gray-600 mt-2">Experience lightning fast script execution with the keyless executor.</p>
+                </div>
+            </div>
+            <ExecutorUI />
+        </div>
+
+        <div className="lg:pt-24 space-y-6">
+            <div className="md:hidden">
+                 <h3 className="text-xl font-semibold text-gray-900">Lightning Fast Performance</h3>
+                 <p className="text-gray-600 mt-2">Experience lightning fast script execution with the keyless executor.</p>
+            </div>
+            <div className="bg-white p-4 rounded-lg flex items-center justify-between border border-gray-200 shadow-sm">
+                <div className="flex items-center space-x-3">
+                    <div className="bg-gray-100 p-2 rounded-full">
+                         <LightningIcon className="w-5 h-5 text-gray-800" />
+                    </div>
+                    <div>
+                        <p className="font-semibold text-gray-900">Execution Speed</p>
+                        <p className="text-sm text-gray-500">Instant script execution</p>
+                    </div>
+                </div>
+                <div className="flex items-center space-x-1 bg-gray-100 p-1 rounded-full">
+                     <button className="px-3 py-1 text-xs rounded-full bg-white border border-gray-300 text-gray-700">Lightning Fast</button>
+                </div>
+            </div>
+
+            <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                        <ResponseTimeIcon className="w-5 h-5 text-gray-500" />
+                        <span className="text-gray-900">Response Time</span>
+                    </div>
+                    <span className="text-green-600 font-semibold text-sm">Fast</span>
+                </div>
+                <p className="text-sm text-gray-500 mt-1 pl-8">Ultra-low latency</p>
+            </div>
+             <div className="bg-white p-4 rounded-lg border border-gray-200 shadow-sm">
+                <div className="flex items-center justify-between">
+                    <div className="flex items-center space-x-3">
+                        <ReliabilityIcon className="w-5 h-5 text-gray-500" />
+                        <span className="text-gray-900">Very stable executor</span>
+                    </div>
+                    <span className="text-green-600 font-semibold text-sm">90 Unc & 41 Sunc</span>
+                </div>
+            </div>
+        </div>
+      </div>
+    </section>
+  );
+};
+
+export default ExecutorPreviewSection;
