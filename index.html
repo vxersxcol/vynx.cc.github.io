@@ -3,178 +3,179 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Novx.cc | Vynx Script</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <title>Vynx.cc</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <style>
     body {
-      background: linear-gradient(135deg, #000814, #001D3D, #003566);
+      background: linear-gradient(145deg, #001a1a, #003333);
       color: white;
+      min-height: 100vh;
       font-family: 'Poppins', sans-serif;
       overflow-x: hidden;
+      transition: background 0.5s, color 0.5s;
     }
     .navbar {
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(8px);
-      box-shadow: 0 0 10px cyan;
+      background: rgba(0, 0, 0, 0.7);
+      box-shadow: 0 0 15px #00ffff55;
+    }
+    .navbar-brand {
+      display: flex;
+      align-items: center;
+      font-weight: 600;
+      color: cyan !important;
+      text-shadow: 0 0 10px cyan;
     }
     .navbar-brand img {
-      height: 40px;
-      margin-right: 10px;
+      height: 32px;
+      margin-right: 8px;
     }
-    .glow-card {
-      background: rgba(0,0,0,0.6);
-      border: 1px solid cyan;
+    .card {
+      background: rgba(0, 0, 0, 0.6);
+      border: 1px solid #00ffff55;
       border-radius: 15px;
-      padding: 20px;
-      margin: 15px 0;
-      box-shadow: 0 0 15px cyan;
-      transform: scale(0.95);
-      opacity: 0;
-      transition: all 0.6s ease;
+      box-shadow: 0 0 20px #00ffff44;
+      transition: transform 0.3s, box-shadow 0.3s;
     }
-    .glow-card.visible {
-      opacity: 1;
-      transform: scale(1);
-    }
-    .footer {
-      text-align: center;
-      padding: 15px;
-      font-size: 14px;
-      color: #ccc;
-      border-top: 1px solid rgba(255,255,255,0.1);
-      margin-top: 40px;
-    }
-    .modal-content {
-      background: #001D3D;
-      color: white;
-      border: 1px solid cyan;
-      border-radius: 15px;
-      box-shadow: 0 0 20px cyan;
-    }
-    .settings {
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      background: rgba(0,0,0,0.7);
-      border: 1px solid cyan;
-      border-radius: 15px;
-      padding: 10px;
-      z-index: 2000;
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 0 25px #00ffff88;
     }
     .theme-btn {
-      margin: 3px;
-      width: 25px;
-      height: 25px;
+      width: 20px; height: 20px;
       border-radius: 50%;
+      margin: 3px;
       border: none;
-      outline: none;
+      cursor: pointer;
+    }
+    .theme-dark { background: #00ffff; }
+    .theme-light { background: #ff00ff; }
+    .theme-old { background: #00ff88; }
+    footer {
+      text-align: center;
+      margin-top: 50px;
+      color: #ccc;
+      font-size: 0.85rem;
+    }
+    /* Discord popup */
+    #discordPopup {
+      position: fixed;
+      bottom: -100%;
+      right: 30px;
+      background: rgba(0, 0, 0, 0.9);
+      border: 2px solid cyan;
+      padding: 20px;
+      border-radius: 15px;
+      text-align: center;
+      width: 260px;
+      box-shadow: 0 0 20px cyan;
+      transition: all 0.6s ease;
+      z-index: 1000;
+    }
+    #discordPopup.active { bottom: 30px; }
+    #discordPopup img {
+      width: 50px;
+      margin-bottom: 10px;
+      filter: drop-shadow(0 0 5px cyan);
+    }
+    #closePopup {
+      position: absolute;
+      top: 5px; right: 10px;
+      cursor: pointer;
+      color: cyan;
+      font-weight: bold;
+    }
+    /* Buy modal */
+    .modal-content {
+      background: #002222;
+      color: white;
+      border: 1px solid cyan;
+      box-shadow: 0 0 25px cyan;
     }
   </style>
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="navbar navbar-dark px-3">
-    <a class="navbar-brand d-flex align-items-center" href="#">
-      <img src="Logo.png" alt="Logo"> <span>Novx.cc</span>
+
+  <nav class="navbar navbar-expand-lg px-3">
+    <a class="navbar-brand" href="#">
+      <img src="Logo.png" alt="Logo"> Vynx.cc
     </a>
-    <button class="btn btn-outline-info" data-bs-toggle="modal" data-bs-target="#discordModal">Join Discord</button>
+    <div class="ms-auto d-flex align-items-center">
+      <button class="btn btn-outline-info btn-sm me-3" id="discordBtn">Join Discord</button>
+      <div>
+        <button class="theme-btn theme-dark" onclick="setTheme('dark')"></button>
+        <button class="theme-btn theme-light" onclick="setTheme('light')"></button>
+        <button class="theme-btn theme-old" onclick="setTheme('old')"></button>
+      </div>
+    </div>
   </nav>
 
-  <!-- Hero -->
-  <div class="container text-center mt-5">
-    <h1 class="fw-bold mb-3">Vynx.cc Script</h1>
-    <p class="text-info">Premium Roblox utility script - smooth, optimized, and evolving.</p>
-  </div>
+  <div class="container mt-5 text-center">
+    <h2 class="mb-2 text-info fw-bold">Vynx.cc Script</h2>
+    <p class="text-muted">Premium Roblox utility script – smooth, optimized, and evolving.</p>
 
-  <!-- Shop Section -->
-  <div class="container mt-4">
-    <div id="productCard" class="glow-card text-center">
-      <h3>Vynx.cc Script</h3>
-      <p>Stock: <span id="stock">0</span></p>
+    <div class="card mx-auto mt-4 p-4" style="max-width: 600px;">
+      <h4>Vynx.cc Script</h4>
+      <p id="stockDisplay">Stock: 0</p>
       <button id="buyBtn" class="btn btn-info" disabled>Buy Now</button>
     </div>
   </div>
 
-  <!-- Footer -->
-  <div class="footer">
-    <p>Payments in <b>LTC</b> only • © 2025 Novx.cc</p>
+  <footer class="mt-5">
+    Payments in <strong>LTC</strong> only – © 2025 Vynx.cc
+  </footer>
+
+  <!-- Discord Popup -->
+  <div id="discordPopup">
+    <div id="closePopup">×</div>
+    <img src="Logo.png" alt="Logo">
+    <h6>Join our Discord!</h6>
+    <p>Be part of the Vynx.cc community.</p>
+    <a href="https://discord.gg/Rj8Nbmq5" target="_blank" class="btn btn-info btn-sm">Join Now</a>
   </div>
 
-  <!-- Payment Modal -->
-  <div class="modal fade" id="paymentModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content text-center p-3">
-        <h4>LTC Payment</h4>
-        <p>Send <b id="ltcAmount">0.002</b> LTC to:</p>
-        <p class="text-info"><code id="ltcAddress"></code></p>
-        <p>Waiting for payment...</p>
-        <button class="btn btn-success" id="confirmPayment">Confirm Payment</button>
+  <!-- Buy Modal -->
+  <div class="modal fade" id="buyModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content p-3 text-center">
+        <h5 class="text-info">Purchase via LTC</h5>
+        <p>Send exactly <strong>0.005 LTC</strong> to the address below:</p>
+        <p class="text-warning">ltc1qp7exampleaddresshere</p>
+        <p class="text-muted">Waiting for payment confirmation...</p>
+        <button class="btn btn-success btn-sm mt-2" data-bs-dismiss="modal">Close</button>
       </div>
     </div>
   </div>
 
-  <!-- Discord Preview Modal -->
-  <div class="modal fade" id="discordModal" tabindex="-1">
-    <div class="modal-dialog">
-      <div class="modal-content text-center p-3">
-        <h4>Join our Discord</h4>
-        <img src="Logo.png" class="mb-3" width="80">
-        <p>Be part of the Novx community.</p>
-        <a href="https://discord.gg/Rj8Nbmq5" target="_blank" class="btn btn-info">Join Now</a>
-      </div>
-    </div>
-  </div>
-
-  <!-- Settings Panel -->
-  <div class="settings">
-    <h6 class="text-info mb-2">Theme</h6>
-    <button class="theme-btn" style="background:#00FFFF" data-theme="cyan"></button>
-    <button class="theme-btn" style="background:#FF00FF" data-theme="magenta"></button>
-    <button class="theme-btn" style="background:#00FF7F" data-theme="green"></button>
-  </div>
-
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script>
-    // Glow animation
-    const cards = document.querySelectorAll('.glow-card');
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) entry.target.classList.add('visible');
-      });
-    });
-    cards.forEach(card => observer.observe(card));
+    // Theme logic
+    function setTheme(t) {
+      if (t === 'light') document.body.style.background = 'linear-gradient(145deg, #ffeeff, #ffe4ff)';
+      else if (t === 'old') document.body.style.background = 'linear-gradient(145deg, #002244, #003333)';
+      else document.body.style.background = 'linear-gradient(145deg, #001a1a, #003333)';
+    }
 
-    // Stock system
-    const stockEl = document.getElementById('stock');
+    // Discord popup
+    const discordBtn = document.getElementById('discordBtn');
+    const discordPopup = document.getElementById('discordPopup');
+    const closePopup = document.getElementById('closePopup');
+    discordBtn.onclick = () => discordPopup.classList.add('active');
+    closePopup.onclick = () => discordPopup.classList.remove('active');
+
+    // Stock logic
+    const stock = 0;
     const buyBtn = document.getElementById('buyBtn');
-    let stock = 0;
-    if (stock > 0) buyBtn.disabled = false;
+    const stockDisplay = document.getElementById('stockDisplay');
+    if (stock > 0) {
+      buyBtn.disabled = false;
+      stockDisplay.textContent = "Stock: " + stock;
+    } else {
+      stockDisplay.textContent = "Out of Stock";
+    }
 
-    // Payment
-    buyBtn.addEventListener('click', () => {
-      const ltcAddress = "LTC" + Math.random().toString(36).substring(2,12).toUpperCase();
-      document.getElementById('ltcAddress').textContent = ltcAddress;
-      new bootstrap.Modal(document.getElementById('paymentModal')).show();
-    });
-
-    document.getElementById('confirmPayment').addEventListener('click', () => {
-      alert('Payment received successfully! ✅');
-      bootstrap.Modal.getInstance(document.getElementById('paymentModal')).hide();
-    });
-
-    // Theme system
-    const btns = document.querySelectorAll('.theme-btn');
-    btns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        document.body.style.background = 
-          btn.dataset.theme === 'cyan' ? 'linear-gradient(135deg,#000814,#001D3D,#00FFFF)' :
-          btn.dataset.theme === 'magenta' ? 'linear-gradient(135deg,#1A001A,#33004D,#FF00FF)' :
-          'linear-gradient(135deg,#002B1A,#004D33,#00FF7F)';
-        localStorage.setItem('theme', btn.dataset.theme);
-      });
-    });
-    const savedTheme = localStorage.getItem('theme');
-    if (savedTheme) document.querySelector(`[data-theme="${savedTheme}"]`).click();
+    // Buy Modal
+    const buyModal = new bootstrap.Modal(document.getElementById('buyModal'));
+    buyBtn.onclick = () => buyModal.show();
   </script>
 </body>
 </html>
